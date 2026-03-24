@@ -3,13 +3,13 @@ Hybrid Weekly Approval System for the Social Engine.
 
 FLOW:
   1. Sunday 6 PM - pipeline_runner.py generates 7 days of content
-  2. Sunday 6:05 PM - weekly_approval.py sends a full 7-day preview email to [YOUR NAME]
-  3. [YOUR NAME] reviews on his phone or computer and replies with one of:
+  2. Sunday 6:05 PM - weekly_approval.py sends a full 7-day preview email to Ryan
+  3. Ryan reviews on his phone or computer and replies with one of:
        APPROVE ALL           -> Schedule all 7 days into Blotato
        APPROVE ALL SKIP 3 5  -> Schedule all days except Day 3 and Day 5
        SKIP ALL              -> Discard this week (rare)
   4. Engine polls Gmail for the reply, parses it, and bulk-schedules approved days
-  5. [YOUR NAME] receives a confirmation email listing all scheduled post times
+  5. Ryan receives a confirmation email listing all scheduled post times
 
 SCHEDULE LOGIC:
   Posts are scheduled to publish at 9:00 AM EST (14:00 UTC) on each day.
@@ -43,17 +43,17 @@ POST_MINUTE_UTC = 0
 DAY_WEEKDAY_MAP = {1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 7: 6}
 
 CLIENT_EMAIL_CONFIG = {
-    "your_client_slug": {
-        "send_to": "YOUR_EMAIL@yourdomain.com",
-        "reply_from": "YOUR_EMAIL@yourdomain.com",
-        "subject_prefix": "[[YOUR NAME] Social Engine]",
-        "display_name": "[YOUR NAME]",
+    "your_client": {
+        "send_to": "your@email.com",
+        "reply_from": "your@email.com",
+        "subject_prefix": "[Ryan Social Engine]",
+        "display_name": "Ryan",
     },
-    "your_second_client_slug": {
-        "send_to": "YOUR_CLIENT_EMAIL@yourdomain.com",
-        "reply_from": "YOUR_CLIENT_EMAIL@yourdomain.com",
-        "subject_prefix": "[[CLIENT NAME] Social Engine]",
-        "display_name": "[CLIENT NAME]",
+    "client_b": {
+        "send_to": "PLACEHOLDER_MARCELA_EMAIL",
+        "reply_from": "PLACEHOLDER_MARCELA_EMAIL",
+        "subject_prefix": "[Client B Social Engine]",
+        "display_name": "Client B",
     },
 }
 
@@ -593,7 +593,7 @@ def cmd_status(slug: str):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Weekly approval system for the Social Engine")
-    parser.add_argument("--client", required=True, help="Client slug: ryan or marcela")
+    parser.add_argument("--client", required=True, help="Client slug: ryan or client_b")
     parser.add_argument("--send-preview", action="store_true", help="Build 7-day preview and send approval email")
     parser.add_argument("--poll", action="store_true", help="Poll Gmail for APPROVE ALL reply")
     parser.add_argument("--status", action="store_true", help="Show current weekly approval state")

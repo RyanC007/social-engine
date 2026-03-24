@@ -1,9 +1,9 @@
 """
-Hook selector for [YOUR NAME] Social Engine.
+Hook selector for Ryan Social Engine.
 
 Picks the best opening hook from a curated, pre-filled library built on
 proven viral frameworks (viral-hooks-master.txt). Every hook is designed to:
-  - Position [YOUR NAME] as an authority in AI infrastructure
+  - Position Ryan as an authority in AI infrastructure
   - Drive subscribers and customers
   - Work on the specific platform it's assigned to
 
@@ -19,23 +19,23 @@ from typing import Optional
 import random
 
 # Client slug constants
-CLIENT_RYAN = "your_client_slug"
-CLIENT_MARCELA = "your_second_client_slug"
+CLIENT_RYAN = "your_client"
+CLIENT_B = "client_b"
 
 
 @dataclass
 class Hook:
     id: int
     template: str           # fill-in-blank version
-    example: str            # pre-filled example for [YOUR NAME]'s AI authority brand
+    example: str            # pre-filled example for Ryan's AI authority brand
     intent: str             # contrarian | authority | curiosity | results | callout | revelation | social_proof
     best_for: list[str]     # platforms: linkedin | x | instagram | threads | youtube_shorts
     content_type: list[str] # post | article | both
 
 
-# ─── Curated hooks pre-filled for [YOUR NAME]'s AI authority brand ───────────────────
+# ─── Curated hooks pre-filled for Ryan's AI authority brand ───────────────────
 # Source: viral-hooks-master.txt (1400 hooks)  - best patterns for AI/business niche
-# Intent: establish [YOUR NAME] as THE authority on AI infrastructure, drive subs + customers
+# Intent: establish Ryan as THE authority on AI infrastructure, drive subs + customers
 
 HOOKS = [
     # CONTRARIAN  - challenge what people believe about AI
@@ -69,7 +69,7 @@ HOOKS = [
          "Stop buying AI tools if you want to build a business that actually scales.",
          "contrarian", ["linkedin", "x", "youtube_shorts"], ["post"]),
 
-    # AUTHORITY  - establish [YOUR NAME] as the go-to AI infrastructure expert
+    # AUTHORITY  - establish Ryan as the go-to AI infrastructure expert
     Hook(7,
          "I've spent [time] building AI systems. Here's what [target audience] get wrong.",
          "I've spent years building AI infrastructure. Here's what most business owners get completely wrong.",
@@ -157,7 +157,7 @@ HOOKS = [
          "I built a full AI-powered business system in a weekend. Here's the exact breakdown.",
          "results", ["linkedin", "x", "instagram"], ["post", "article"]),
 
-    # CALLOUT  - speak directly to [YOUR NAME]'s audience
+    # CALLOUT  - speak directly to Ryan's audience
     Hook(24,
          "Business owners, stop scrolling. This is for you.",
          "Business owners, stop scrolling. If you're not building AI infrastructure yet, you're already behind.",
@@ -226,7 +226,7 @@ PLATFORM_DEFAULTS = {
 }
 
 
-# ─── [CLIENT NAME]'s hooks - strategy, operations, financials, GTM, leadership ──────
+# ─── Client B's hooks - strategy, operations, financials, GTM, leadership ──────
 
 MARCELA_HOOKS = [
     # CONTRARIAN

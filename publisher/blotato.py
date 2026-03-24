@@ -84,7 +84,7 @@ def publish_linkedin(post: LinkedInPost, schedule_at: str = None, as_company: st
     """
     Publish to LinkedIn.
     as_company: key from config.LINKEDIN_PAGES to post as a company page,
-                e.g. "ready_plan_grow". Omit to post as [YOUR NAME] personally.
+                e.g. "ready_plan_grow". Omit to post as Ryan personally.
     """
     acct = config.BLOTATO_ACCOUNTS["linkedin"]
     target_extra = {}

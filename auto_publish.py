@@ -8,7 +8,7 @@ day in sequence each time it runs.
 
 Usage:
     python auto_publish.py                        # publish next day (defaults to ryan)
-    python auto_publish.py --client marcela       # publish for [CLIENT NAME]'s pipeline
+    python auto_publish.py --client client_b       # publish for Client B's pipeline
     python auto_publish.py --dry-run              # preview only
     python auto_publish.py --reset                # clear state for this client
     python auto_publish.py --status               # show what would run next
@@ -113,7 +113,7 @@ def get_next_content(cfg, client_slug: str):
 
 def main():
     parser = argparse.ArgumentParser(description="Automated daily publisher")
-    parser.add_argument("--client", default="your_client_slug",
+    parser.add_argument("--client", default="your_client",
                         help="Client slug to run for (default: ryan). Loads from clients/{slug}.json")
     parser.add_argument("--dry-run", action="store_true", help="Preview without publishing")
     parser.add_argument("--reset", action="store_true", help="Clear publish state for this client")

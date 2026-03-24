@@ -1,6 +1,6 @@
 # Setup Guide
 
-**Social Engine** — designed and architected by Ryan Cunningham | [readyplangrow.com](https://readyplangrow.com)
+**Social Engine** — designed and architected by YOUR_NAME | [your-brand.com](https://your-brand.com)
 
 ---
 
@@ -204,5 +204,5 @@ Double-check your account IDs and template IDs in your client config. Account ID
 
 ## Credits
 
-Designed and architected by **Ryan Cunningham**
-Founder, [Ready, Plan, Grow!](https://readyplangrow.com)
+Designed and architected by **YOUR_NAME**
+Founder, [Your Brand Name](https://your-brand.com)

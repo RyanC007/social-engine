@@ -3,7 +3,7 @@ Cloud runner for the Social Engine.
 
 WEEKLY FLOW (automated):
   1. [Sunday 6 PM UTC]  pipeline_runner.py generates 7 days of content
-  2. [Sunday 6 PM UTC]  weekly_approval.py sends 7-day preview email to [YOUR NAME]
+  2. [Sunday 6 PM UTC]  weekly_approval.py sends 7-day preview email to Ryan
   3. [Hourly]           weekly_approval.py polls Gmail for APPROVE ALL reply
   4. [On reply]         Bulk-schedules all approved days into Blotato at 9 AM EST
   5. [On reply]         Sends confirmation email listing all scheduled post times
@@ -26,17 +26,17 @@ STATE_DIR = os.path.join(os.path.dirname(__file__), ".state")
 os.makedirs(STATE_DIR, exist_ok=True)
 
 CLIENT_EMAIL_CONFIG = {
-    "your_client_slug": {
-        "send_to": "YOUR_EMAIL@yourdomain.com",
-        "reply_from": "YOUR_EMAIL@yourdomain.com",
-        "subject_prefix": "[[YOUR NAME] Social Engine]",
-        "display_name": "[YOUR NAME]",
+    "your_client": {
+        "send_to": "your@email.com",
+        "reply_from": "your@email.com",
+        "subject_prefix": "[Ryan Social Engine]",
+        "display_name": "Ryan",
     },
-    "your_second_client_slug": {
-        "send_to": "YOUR_CLIENT_EMAIL@yourdomain.com",
-        "reply_from": "YOUR_CLIENT_EMAIL@yourdomain.com",
-        "subject_prefix": "[[CLIENT NAME] Social Engine]",
-        "display_name": "[CLIENT NAME]",
+    "client_b": {
+        "send_to": "PLACEHOLDER_MARCELA_EMAIL",
+        "reply_from": "PLACEHOLDER_MARCELA_EMAIL",
+        "subject_prefix": "[Client B Social Engine]",
+        "display_name": "Client B",
     },
 }
 
@@ -183,7 +183,7 @@ if __name__ == "__main__":
     sys.path.insert(0, os.path.dirname(__file__))
 
     parser = argparse.ArgumentParser(description="Social Engine cloud runner")
-    parser.add_argument("--client", required=True, help="Client slug: ryan or marcela")
+    parser.add_argument("--client", required=True, help="Client slug: ryan or client_b")
     parser.add_argument("--run", action="store_true",
                         help="Unified mode: run pipeline Sunday 6 PM, poll all other times (use for scheduled task)")
     parser.add_argument("--status", action="store_true", help="Show current pipeline state")

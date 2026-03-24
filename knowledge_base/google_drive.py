@@ -17,8 +17,8 @@ Two Drive sources:
      Week N/  - future weeks
 
 2. Knowledge base (KNOWLEDGE_BASE_FOLDER_ID):
-     Docs about [YOUR NAME]  - author profile, voice, expertise, brand guidelines.
-     Injected into every post so content always sounds like [YOUR NAME].
+     Docs about Ryan  - author profile, voice, expertise, brand guidelines.
+     Injected into every post so content always sounds like Ryan.
 """
 import io
 import os
@@ -193,7 +193,7 @@ def get_current_week_content() -> str:
 
 def get_ryan_knowledge() -> str:
     """
-    Read all docs from [YOUR NAME]'s knowledge base folder.
+    Read all docs from Ryan's knowledge base folder.
     Returns them as a single context string injected into every post.
     Folder: KNOWLEDGE_BASE_FOLDER_ID (0APmCUWwWZsQIUk9PVA)
     """
@@ -202,7 +202,7 @@ def get_ryan_knowledge() -> str:
         print("[Drive] KNOWLEDGE_BASE_FOLDER_ID not set  - skipping author context.")
         return ""
 
-    print("[Drive] Loading [YOUR NAME]'s knowledge base...")
+    print("[Drive] Loading Ryan's knowledge base...")
     files = _list_children(folder_id)
 
     context_parts = []

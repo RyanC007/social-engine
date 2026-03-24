@@ -1,5 +1,5 @@
 """
-Weekly Content Pipeline for [YOUR NAME]'s Personal Brand.
+Weekly Content Pipeline for Ryan's Personal Brand.
 
 Runs every Sunday at 6:00 PM UTC.
 
@@ -10,12 +10,12 @@ WHAT IT DOES:
 4. Enforces topic pillar rotation (AI Architecture, Getting Started with AI, Founders Flywheel, etc.)
 5. Enforces all guardrails (no click links, no generic CTAs, no em dashes, engagement question mandatory)
 6. Writes 7 post files to the Drive content pipeline folder in the correct frontmatter format
-7. Sends [YOUR NAME] an email summary of what was generated
+7. Sends Ryan an email summary of what was generated
 
 TOPIC PILLARS (must rotate across 7 days, no same pillar on consecutive days):
   P1: AI Architecture       - How AI systems are built, agent design, infrastructure
   P2: Getting Started AI    - Practical first steps, demystifying AI for founders
-  P3: Founders Flywheel     - [YOUR NAME]'s framework: build, measure, iterate, compound
+  P3: Founders Flywheel     - Ryan's framework: build, measure, iterate, compound
   P4: Knowledge Building    - Knowledge bases, documentation, AI fuel
   P5: Brand Building        - Personal brand, authority, content systems
   P6: AI Automation         - Workflows, time savings, ROI of automation
@@ -50,6 +50,12 @@ from datetime import datetime, timedelta, timezone
 
 # Add parent directory to path for engine imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+
+try:
+    from content.hook_selector import suggest_hooks, apply_hook
+    HOOK_SELECTOR_AVAILABLE = True
+except ImportError:
+    HOOK_SELECTOR_AVAILABLE = False
 
 try:
     import google.generativeai as genai
@@ -90,7 +96,7 @@ PILLARS = {
     },
     "P3": {
         "name": "Founders Flywheel",
-        "description": "[YOUR NAME]'s proprietary framework. Build, measure, iterate, compound. Momentum in business growth. Systems that create self-reinforcing results.",
+        "description": "Ryan's proprietary framework. Build, measure, iterate, compound. Momentum in business growth. Systems that create self-reinforcing results.",
         "angles": [
             "The Founders Flywheel isn't a metaphor. It's a system...",
             "Compounding is not just for investors. Here's how it works for founders...",
@@ -215,6 +221,51 @@ def validate_post(text: str) -> list:
 # Content generation via Gemini
 # ---------------------------------------------------------------------------
 
+def _get_hook_directive(day_config: dict) -> str:
+    """
+    Pull a curated viral hook from the hook library and return it as a
+    directive string for the Gemini prompt. Maps post type to hook intent.
+    """
+    if not HOOK_SELECTOR_AVAILABLE:
+        return "Write a strong opening hook that stops the scroll. Bold statement or pattern interrupt. No em dashes. Under 3 lines."
+
+    # Map post type to hook intent
+    intent_map = {
+        "Educational":        "authority",
+        "Story-Based":        "revelation",
+        "Thought Leadership": "contrarian",
+        "Tactical":           "results",
+        "Engagement":         "curiosity",
+    }
+    post_type = day_config.get("type", "Educational")
+    intent = intent_map.get(post_type, "authority")
+    client_slug = day_config.get("client", "your_client")
+
+    try:
+        hooks = suggest_hooks(
+            content_type="post",
+            intent=intent,
+            platform="linkedin",
+            client_slug=client_slug,
+            limit=3,
+        )
+        if hooks:
+            # Provide 3 options so Gemini can pick the best fit for the topic
+            options = "\n".join(
+                f"  Option {i+1}: {h.template}  (e.g. {h.example})"
+                for i, h in enumerate(hooks[:3])
+            )
+            return (
+                f"Use one of these proven viral hook frameworks as the structural basis for your ## Hook section.\n"
+                f"Adapt it to fit the specific topic and golden moments context. Do NOT copy it verbatim.\n"
+                f"{options}"
+            )
+    except Exception:
+        pass
+
+    return "Write a strong opening hook that stops the scroll. Bold statement or pattern interrupt. No em dashes. Under 3 lines."
+
+
 def generate_post_with_gemini(
     day_config: dict,
     golden_moments_context: str,
@@ -233,7 +284,10 @@ def generate_post_with_gemini(
     hashtags = " ".join(pillar["hashtags"])
     previous = ", ".join(previous_topics) if previous_topics else "none yet"
 
-    prompt = f"""You are writing a LinkedIn post for [YOUR NAME], co-founder of Ready, Plan, Grow! ([YOUR BRAND]).
+    # Pull a curated viral hook from the hook library
+    hook_directive = _get_hook_directive(day_config)
+
+    prompt = f"""You are writing a LinkedIn post for YOUR_NAME, co-founder of Your Brand Name (RPG).
 
 RYAN'S VOICE:
 - Direct, strategic, authority-building
@@ -256,6 +310,9 @@ POST SPECIFICATIONS:
 
 ANGLE OPTIONS (choose the most relevant to the golden moments context, or create a better one in the same spirit):
 {angle_options}
+
+OPENING HOOK DIRECTIVE:
+{hook_directive}
 
 OUTPUT FORMAT (use exactly this structure):
 ---
@@ -323,7 +380,7 @@ hashtags: {hashtags}
 
 Context: {pillar['description']}
 
-Use [YOUR NAME]'s voice: direct, specific, anti-BS, first person, practical over theoretical.]
+Use Ryan's voice: direct, specific, anti-BS, first person, practical over theoretical.]
 
 ## Engagement
 What is the one thing about {pillar['name'].lower()} that you wish someone had told you before you started?"""
@@ -333,7 +390,7 @@ What is the one thing about {pillar['name'].lower()} that you wish someone had t
 # Golden Moments loader
 # ---------------------------------------------------------------------------
 
-def load_golden_moments_context(client_slug: str = "your_client_slug") -> str:
+def load_golden_moments_context(client_slug: str = "your_client") -> str:
     """
     Load the most recent weekly synthesis from the local content directory.
     Falls back to checking the Drive folder path if local files are not found.
@@ -396,7 +453,7 @@ def write_post_file(post_content: str, day: int, output_dir: str) -> str:
 # Main pipeline
 # ---------------------------------------------------------------------------
 
-def run_pipeline(client_slug: str = "your_client_slug", output_dir: str = None, dry_run: bool = False):
+def run_pipeline(client_slug: str = "your_client", output_dir: str = None, dry_run: bool = False):
     """Run the full weekly content pipeline."""
     now = datetime.now(timezone.utc)
     # ISO week label
@@ -481,7 +538,7 @@ def run_pipeline(client_slug: str = "your_client_slug", output_dir: str = None, 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Weekly content pipeline")
-    parser.add_argument("--client", default="your_client_slug", help="Client slug")
+    parser.add_argument("--client", default="your_client", help="Client slug")
     parser.add_argument("--output-dir", help="Override output directory")
     parser.add_argument("--dry-run", action="store_true", help="Preview without writing files")
     args = parser.parse_args()

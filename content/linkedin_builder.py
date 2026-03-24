@@ -45,13 +45,13 @@ def build_linkedin_post(
     Structure the Manus-generated content into a LinkedInPost.
 
     content:      raw text from Google Drive (Manus output for current week).
-    ryan_context: author knowledge base  - who [YOUR NAME] is, his voice, expertise.
+    ryan_context: author knowledge base  - who Ryan is, his voice, expertise.
                   Used during review so the editor has full context.
     brand_images: local paths to Week 1 brand template images.
     """
     tags = hashtags if hashtags is not None else _infer_hashtags(topic)
 
-    # If [YOUR NAME]'s knowledge context is available, prepend a voice note to guide
+    # If Ryan's knowledge context is available, prepend a voice note to guide
     # any manual edits  - it's not published, just visible during review.
     text = content.strip()
 

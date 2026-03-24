@@ -2,7 +2,7 @@
 
 **A personal brand content pipeline that generates, repurposes, and publishes across LinkedIn, X, Instagram, Facebook, TikTok, and YouTube Shorts — fully automated with a single weekly approval.**
 
-Designed and architected by **Ryan Cunningham** | [readyplangrow.com](https://readyplangrow.com)
+Designed and architected by **YOUR_NAME** | [your-brand.com](https://your-brand.com)
 
 ---
 
@@ -194,8 +194,8 @@ The engine enforces these rules on every post before it publishes:
 
 ## Credits
 
-Designed and architected by **Ryan Cunningham**
-Founder, [Ready, Plan, Grow!](https://readyplangrow.com)
+Designed and architected by **YOUR_NAME**
+Founder, [Your Brand Name](https://your-brand.com)
 
 Built for founders and operators who want a personal brand pipeline that runs itself.
 

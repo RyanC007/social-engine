@@ -3,7 +3,7 @@ Client configuration loader.
 
 Each client is a JSON file in the clients/ directory.
 The engine uses ClientConfig everywhere instead of the global config.py,
-so the same code can serve [YOUR NAME], future clients, and the MCP server.
+so the same code can serve Ryan, future clients, and the MCP server.
 """
 import json
 import os

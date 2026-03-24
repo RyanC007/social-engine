@@ -43,23 +43,39 @@ except ImportError:
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")
 GEMINI_MODEL = "gemini-2.5-flash"
 
-BLOCKED_PATTERNS = [
-    (r"click here",         "click here"),
-    (r"link in bio",        "link in bio"),
-    (r"check out my link",  "check out my link"),
-    (r"visit my profile",   "visit my profile"),
-    (r"follow me\b",        "follow me"),
-    (r"follow for more",    "follow for more"),
-    (r"like and share",     "like and share"),
-    (r"share this post",    "share this post"),
-    (r"\u2014",             "em dash"),
-    (r"\u2013",             "en dash"),
-    (r"game.changing",      "game-changing"),
-    (r"unprecedented",      "unprecedented"),
-    (r"the only [a-z]+ that", "the only X that"),
-    (r"dm me\b",            "DM me"),
-    (r"send me a message",  "send me a message"),
+# Global guardrails - blocked on ALL platforms without exception
+BLOCKED_PATTERNS_ALL = [
+    (r"click here",             "click here"),
+    (r"check out my link",      "check out my link"),
+    (r"visit my profile",       "visit my profile"),
+    (r"like and share",         "like and share"),
+    (r"share this post",        "share this post"),
+    (r"\u2014",                 "em dash"),
+    (r"\u2013",                 "en dash"),
+    (r"game.changing",          "game-changing"),
+    (r"unprecedented",          "unprecedented"),
+    (r"the only [a-z]+ that",   "the only X that"),
+    (r"dm me\b",                "DM me"),
+    (r"send me a message",      "send me a message"),
 ]
+
+# Platform-specific guardrails - only blocked on certain platforms
+# Format: (pattern, description, blocked_on_platforms)
+# blocked_on_platforms: list of platform slugs where this IS blocked.
+#   Use ["all"] to block everywhere, or list specific platforms.
+BLOCKED_PATTERNS_PLATFORM = [
+    # "link in bio" is standard practice on Instagram and TikTok.
+    # Block it on LinkedIn, X, Facebook, YouTube where it looks spammy.
+    (r"link in bio",    "link in bio",    ["linkedin", "x", "facebook", "youtube_shorts"]),
+    # "follow me" is natural on TikTok and YouTube Shorts.
+    # Block it on LinkedIn and X where it reads as low-quality.
+    (r"follow me\b",    "follow me",      ["linkedin", "x", "facebook"]),
+    # "follow for more" is acceptable on TikTok/YouTube but spammy on LinkedIn.
+    (r"follow for more", "follow for more", ["linkedin", "x", "facebook"]),
+]
+
+# Keep a flat BLOCKED_PATTERNS alias for backward compatibility with validate_text()
+BLOCKED_PATTERNS = BLOCKED_PATTERNS_ALL
 
 
 # ---------------------------------------------------------------------------
@@ -77,7 +93,7 @@ class MasterPost:
     topic: str = ""
     pillar: str = ""
     day: int = 1
-    client: str = "your_client_slug"
+    client: str = "your_client"
 
 
 @dataclass
@@ -141,28 +157,46 @@ def parse_master_post(filepath: str) -> MasterPost:
 # Guardrail validator
 # ---------------------------------------------------------------------------
 
-def validate_text(text: str) -> list:
-    """Returns list of violations in the text."""
+def validate_text(text: str, platform: str = "linkedin") -> list:
+    """
+    Returns list of violations in the text.
+    Platform-aware: some patterns are only violations on certain platforms.
+    """
     violations = []
     text_lower = text.lower()
-    for pattern, label in BLOCKED_PATTERNS:
+
+    # Global patterns - always blocked
+    for pattern, label in BLOCKED_PATTERNS_ALL:
         if re.search(pattern, text_lower):
             violations.append(f"Blocked: '{label}'")
+
+    # Platform-specific patterns
+    for pattern, label, blocked_on in BLOCKED_PATTERNS_PLATFORM:
+        if platform in blocked_on:
+            if re.search(pattern, text_lower):
+                violations.append(f"Blocked on {platform}: '{label}'")
+
     return violations
 
 
-def clean_text(text: str) -> str:
-    """Auto-fix common guardrail violations."""
-    # Remove em dashes
+def clean_text(text: str, platform: str = "linkedin") -> str:
+    """
+    Auto-fix common guardrail violations.
+    Platform-aware: only strips phrases that are actually violations on this platform.
+    """
+    # Always remove em dashes
     text = text.replace("\u2014", ",")
     text = text.replace("\u2013", ",")
-    # Remove follow CTAs
-    text = re.sub(r"follow me for more.*?\.", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"follow for more.*?\.", "", text, flags=re.IGNORECASE)
-    text = re.sub(r"like and share.*?\.", "", text, flags=re.IGNORECASE)
-    # Remove link CTAs
-    text = re.sub(r"link in bio.*?\.", "", text, flags=re.IGNORECASE)
+    # Always remove click-bait CTAs
     text = re.sub(r"click here.*?\.", "", text, flags=re.IGNORECASE)
+    text = re.sub(r"like and share.*?\.", "", text, flags=re.IGNORECASE)
+    # "link in bio" is valid on Instagram and TikTok - only strip on other platforms
+    if platform not in ("instagram", "tiktok"):
+        text = re.sub(r"link in bio.*?\.", "", text, flags=re.IGNORECASE)
+    # "follow me" / "follow for more" is valid on TikTok and YouTube Shorts
+    if platform not in ("tiktok", "youtube_shorts"):
+        text = re.sub(r"follow me for more.*?\.", "", text, flags=re.IGNORECASE)
+        text = re.sub(r"follow for more.*?\.", "", text, flags=re.IGNORECASE)
     return text.strip()
 
 
@@ -203,12 +237,12 @@ def derive_x(post: MasterPost) -> PlatformPost:
     if post.hashtags and len(candidate) + len(post.hashtags[0]) + 2 <= 280:
         candidate += f"\n\n{post.hashtags[0]}"
 
-    candidate = clean_text(candidate)
+    candidate = clean_text(candidate, platform="x")
     return PlatformPost(
         platform="x",
         text=candidate,
         hashtags=post.hashtags[:2],
-        violations=validate_text(candidate),
+        violations=validate_text(candidate, platform="x"),
     )
 
 
@@ -224,7 +258,7 @@ def derive_instagram(post: MasterPost) -> PlatformPost:
     if post.hashtags:
         text += "\n\n" + " ".join(post.hashtags[:10])
 
-    text = clean_text(text)
+    text = clean_text(text, platform="instagram")
     if len(text) > 2200:
         text = text[:2197] + "..."
 
@@ -232,7 +266,7 @@ def derive_instagram(post: MasterPost) -> PlatformPost:
         platform="instagram",
         text=text,
         hashtags=post.hashtags[:10],
-        violations=validate_text(text),
+        violations=validate_text(text, platform="instagram"),
     )
 
 
@@ -247,12 +281,12 @@ def derive_threads(post: MasterPost) -> PlatformPost:
         first_sentence = first_sentence[:max_insight].rsplit(" ", 1)[0] + "..."
         candidate = f"{post.hook.split(chr(10))[0]}\n\n{first_sentence}\n\n{post.engagement}"
 
-    candidate = clean_text(candidate)
+    candidate = clean_text(candidate, platform="threads")
     return PlatformPost(
         platform="threads",
         text=candidate,
         hashtags=[],
-        violations=validate_text(candidate),
+        violations=validate_text(candidate, platform="threads"),
     )
 
 
@@ -261,12 +295,12 @@ def derive_facebook(post: MasterPost) -> PlatformPost:
     text = f"{post.hook}\n\n{post.body}\n\n{post.engagement}"
     if post.hashtags:
         text += "\n\n" + " ".join(post.hashtags[:5])
-    text = clean_text(text)
+    text = clean_text(text, platform="facebook")
     return PlatformPost(
         platform="facebook",
         text=text,
         hashtags=post.hashtags[:5],
-        violations=validate_text(text),
+        violations=validate_text(text, platform="facebook"),
     )
 
 
@@ -284,7 +318,7 @@ def derive_tiktok(post: MasterPost) -> PlatformPost:
     script_parts.append(post.engagement)
 
     text = "\n".join(script_parts)
-    text = clean_text(text)
+    text = clean_text(text, platform="tiktok")
 
     # Enforce word count
     words = text.split()
@@ -295,7 +329,7 @@ def derive_tiktok(post: MasterPost) -> PlatformPost:
         platform="tiktok",
         text=text,
         hashtags=post.hashtags[:5],
-        violations=validate_text(text),
+        violations=validate_text(text, platform="tiktok"),
     )
 
 
@@ -308,17 +342,17 @@ def derive_youtube_short(post: MasterPost) -> PlatformPost:
     insight = " ".join(sentences[:3])
 
     script = f"{hook_line}\n\n{insight}\n\n{post.engagement}"
-    script = clean_text(script)
+    script = clean_text(script, platform="youtube_shorts")
 
     words = script.split()
     if len(words) > 200:
         script = " ".join(words[:200]) + "..."
 
     return PlatformPost(
-        platform="youtube",
+        platform="youtube_shorts",
         text=script,
         hashtags=post.hashtags[:3],
-        violations=validate_text(script),
+        violations=validate_text(script, platform="youtube_shorts"),
     )
 
 
@@ -333,7 +367,7 @@ DERIVERS = {
     "threads": derive_threads,
     "facebook": derive_facebook,
     "tiktok": derive_tiktok,
-    "youtube": derive_youtube_short,
+    "youtube_shorts": derive_youtube_short,
 }
 
 

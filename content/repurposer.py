@@ -26,7 +26,7 @@ from content.linkedin_builder import LinkedInPost
 # ---------------------------------------------------------------------------
 
 def _strip_em_dashes(text: str) -> str:
-    """Replace em dashes with a period-space or comma per [YOUR BRAND] brand rules."""
+    """Replace em dashes with a period-space or comma per RPG brand rules."""
     text = re.sub(r"\s*\u2014\s*", ". ", text)
     text = text.replace("\u2014", ",")
     return text

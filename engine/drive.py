@@ -2,7 +2,7 @@
 Google Drive access using a ClientConfig instead of global config.py.
 
 Authentication supports two modes (auto-detected per client config):
-  1. OAuth2 user token  - recommended for personal accounts ([YOUR NAME], [CLIENT NAME]).
+  1. OAuth2 user token  - recommended for personal accounts.
      Requires a token.json file created by the one-time `setup_oauth.py` script.
   2. Service account    - for server/headless deployments with a JSON key file.
 

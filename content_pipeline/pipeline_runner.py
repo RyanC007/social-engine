@@ -7,13 +7,13 @@ FLOW:
   1. Run weekly_pipeline.py to generate 7 LinkedIn master post files
   2. Run post_builder.py on each file to derive all platform posts
   3. Upload all files to the client's Drive content pipeline folder
-  4. Send [YOUR NAME] a summary email of what was generated
+  4. Send Ryan a summary email of what was generated
   5. Update the .state file so cloud_daily_run.py picks up Day 1 on Monday
 
 USAGE:
   python3 pipeline_runner.py --client ryan
   python3 pipeline_runner.py --client ryan --dry-run
-  python3 pipeline_runner.py --client marcela
+  python3 pipeline_runner.py --client client_b
 """
 import argparse
 import json
@@ -36,9 +36,9 @@ def send_pipeline_summary_email(client_slug: str, week_label: str, generated_fil
     """Send a summary email via Gmail MCP after pipeline generation."""
     import subprocess, json
 
-    recipient = "YOUR_EMAIL@yourdomain.com"  # [YOUR NAME]'s email
-    if client_slug == "your_second_client_slug":
-        recipient = "YOUR_CLIENT_EMAIL@yourdomain.com"  # Placeholder for [CLIENT NAME]
+    recipient = "your@email.com"  # Ryan's email
+    if client_slug == "client_b":
+        recipient = "client_b@your-brand.com"  # Placeholder for Client B
 
     subject = f"[{client_slug.upper()}] Weekly Content Pipeline Ready - {week_label}"
 
@@ -90,8 +90,8 @@ def upload_to_drive(files: list, client_slug: str, week_label: str):
     """Upload generated files to the client's Drive content pipeline folder."""
     # Drive folder IDs from client config
     drive_folder_map = {
-        "your_client_slug": "YOUR_DRIVE_FOLDER_ID",      # [YOUR NAME] Content Pipeline
-        "your_second_client_slug": "YOUR_SECOND_DRIVE_FOLDER_ID",   # [CLIENT NAME] Content Pipeline
+        "your_client": "YOUR_DRIVE_FOLDER_ID",      # Ryan Content Pipeline
+        "client_b": "PLACEHOLDER_MARCELA_DRIVE_FOLDER_ID",   # Client B Content Pipeline
     }
 
     folder_id = drive_folder_map.get(client_slug)
@@ -152,7 +152,7 @@ def update_pipeline_state(client_slug: str, week_label: str, generated_files: li
 # Main runner
 # ---------------------------------------------------------------------------
 
-def run(client_slug: str = "your_client_slug", dry_run: bool = False):
+def run(client_slug: str = "your_client", dry_run: bool = False):
     """Run the full pipeline: generate, build platforms, upload, notify."""
     now = datetime.now(timezone.utc)
     next_week = now + timedelta(days=7)
@@ -235,7 +235,7 @@ def run(client_slug: str = "your_client_slug", dry_run: bool = False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Weekly content pipeline runner")
-    parser.add_argument("--client", default="your_client_slug", help="Client slug (ryan or marcela)")
+    parser.add_argument("--client", default="your_client", help="Client slug (ryan or client_b)")
     parser.add_argument("--dry-run", action="store_true", help="Preview without writing or uploading")
     args = parser.parse_args()
 

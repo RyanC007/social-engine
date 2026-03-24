@@ -9,7 +9,7 @@ Frontmatter fields (REQUIRED for Drive sync):
   type:       post | article
   day:        integer
   topic:      string
-  client:     ryan | marcela  (optional, used for multi-client routing)
+  client:     ryan | client_b  (optional, used for multi-client routing)
   platforms:  comma-separated list (e.g. linkedin, x, instagram, youtube_shorts, tiktok, facebook)
   hashtags:   comma-separated list (e.g. AI, AIAgents, BusinessAutomation)
 

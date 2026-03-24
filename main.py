@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-[YOUR NAME] Social Engine  - CLI entry point.
+Ryan Social Engine  - CLI entry point.
 
 Workflow:
   1. Read current week's content from Google Drive (Manus drops it there)
   2. Parse posts vs articles, show menu to pick the LinkedIn pillar
-  3. Pull [YOUR NAME]'s knowledge base + Week 1 brand images
+  3. Pull Ryan's knowledge base + Week 1 brand images
   4. Build LinkedIn pillar post (from selected post or article)
   5. Review & edit each platform post interactively
   6. Publish all approved posts via Blotato
@@ -14,7 +14,7 @@ Usage:
     python main.py --week "Week-2"
     python main.py --week "Week-2" --schedule "2026-03-20T09:00:00Z"
     python main.py --week "Week-2" --dry-run
-    python main.py --week "Week-2" --linkedin-as-company your_company_page_slug
+    python main.py --week "Week-2" --linkedin-as-company ready_plan_grow
     python main.py --week "Week-2" --youtube-video-url https://...
 """
 import argparse
@@ -103,7 +103,7 @@ def review_post(text: str, title: str, platform: str, char_count: bool = True,
 
 
 def pick_pillar(posts: list, articles: list) -> ContentFile:
-    """Show a menu of posts and articles and let [YOUR NAME] pick the LinkedIn pillar."""
+    """Show a menu of posts and articles and let Ryan pick the LinkedIn pillar."""
 
     table = Table(show_header=True, header_style="bold")
     table.add_column("#", style="cyan", width=4)
@@ -137,7 +137,7 @@ def pick_pillar(posts: list, articles: list) -> ContentFile:
 def run(week: str = None, schedule_at: str = None, dry_run: bool = False,
         youtube_video_url: str = None, linkedin_as_company: str = None):
 
-    console.rule("[bold blue][YOUR NAME] Social Engine")
+    console.rule("[bold blue]Ryan Social Engine")
 
     # ── Step 1: Resolve week folder ──────────────────────────────────────────
     if week:
@@ -170,8 +170,8 @@ def run(week: str = None, schedule_at: str = None, dry_run: bool = False,
     console.print(f"\n[yellow]2/5[/yellow] Select the [bold]LinkedIn pillar[/bold]\n")
     pillar = pick_pillar(posts, articles)
 
-    # ── Step 3: Load [YOUR NAME]'s knowledge base ───────────────────────────────────
-    console.print("[yellow]3/5[/yellow] Loading [YOUR NAME]'s knowledge base...")
+    # ── Step 3: Load Ryan's knowledge base ───────────────────────────────────
+    console.print("[yellow]3/5[/yellow] Loading Ryan's knowledge base...")
     ryan_context = get_client_knowledge()
     if ryan_context:
         console.print(f"[green]✓[/green] Knowledge base: {len(ryan_context)} chars")
@@ -262,7 +262,7 @@ def run(week: str = None, schedule_at: str = None, dry_run: bool = False,
 
 def main():
     parser = argparse.ArgumentParser(description="Social Engine CLI")
-    parser.add_argument("--client", default="your_client_slug",
+    parser.add_argument("--client", default="your_client",
                         help="Client slug to run for (default: ryan). "
                              "Loads from clients/{slug}.json")
     parser.add_argument("--week", default=None,
@@ -274,7 +274,7 @@ def main():
     parser.add_argument("--youtube-video-url", default=None,
                         help="Public video URL for YouTube Short")
     parser.add_argument("--linkedin-as-company", default=None,
-                        help="Post LinkedIn as company page slug (defined in clients/{slug}.json linkedin_pages)")
+                        help="Post LinkedIn as company page: your_company_page")
     args = parser.parse_args()
 
     run(
