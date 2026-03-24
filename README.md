@@ -1,6 +1,6 @@
 # Social Engine
 
-**A personal brand content pipeline that generates, repurposes, and publishes across LinkedIn, X, Instagram, Facebook, TikTok, and YouTube Shorts — fully automated with a single weekly approval.**
+**A personal brand content pipeline that generates, repurposes, and publishes across LinkedIn, X, Instagram, Facebook, TikTok, and YouTube Shorts - fully automated with a single weekly approval.**
 
 Designed and architected by **YOUR_NAME** | [your-brand.com](https://your-brand.com)
 
@@ -8,7 +8,7 @@ Designed and architected by **YOUR_NAME** | [your-brand.com](https://your-brand.
 
 ## What This Does
 
-The Social Engine takes a single piece of long-form content (your LinkedIn post) and turns it into a full week of multi-platform content — automatically. You review everything in one Sunday email, reply `APPROVE ALL`, and the engine schedules all posts into [Blotato](https://blotato.com) at the right times.
+The Social Engine takes a single piece of long-form content (your LinkedIn post) and turns it into a full week of multi-platform content - automatically. You review everything in one Sunday email, reply `APPROVE ALL`, and the engine schedules all posts into [Blotato](https://blotato.com) at the right times.
 
 **One approval. Seven days of content. Zero daily management.**
 
@@ -18,26 +18,26 @@ The Social Engine takes a single piece of long-form content (your LinkedIn post)
 
 ```
 Sunday 6 PM
-  Weekly pipeline generates 7 LinkedIn master posts
-  (using your Voice DNA + content pillars + Golden Moments data)
-        |
-        v
-  Each LinkedIn post is repurposed to:
-  X  |  Instagram  |  Facebook  |  TikTok  |  YouTube Shorts
-        |
-        v
-  You receive one email with the full 7-day preview
-        |
-        v
-  Reply: APPROVE ALL
-  (or:   APPROVE ALL SKIP 3 5  to skip specific days)
-        |
-        v
-  All approved posts scheduled into Blotato at 9 AM your timezone
-  Mon through Sun
-        |
-        v
-  Edit or delete any post directly in the Blotato dashboard
+ Weekly pipeline generates 7 LinkedIn master posts
+ (using your Voice DNA + content pillars + Golden Moments data)
+ |
+ v
+ Each LinkedIn post is repurposed to:
+ X | Instagram | Facebook | TikTok | YouTube Shorts
+ |
+ v
+ You receive one email with the full 7-day preview
+ |
+ v
+ Reply: APPROVE ALL
+ (or: APPROVE ALL SKIP 3 5 to skip specific days)
+ |
+ v
+ All approved posts scheduled into Blotato at 9 AM your timezone
+ Mon through Sun
+ |
+ v
+ Edit or delete any post directly in the Blotato dashboard
 ```
 
 ---
@@ -47,7 +47,7 @@ Sunday 6 PM
 | Layer | What it does |
 |---|---|
 | **Content Pipeline** | Generates 7 LinkedIn master posts from your Voice DNA and content pillars using Gemini AI |
-| **Post Builder** | Derives all platform posts from the LinkedIn master — every platform stays on-topic |
+| **Post Builder** | Derives all platform posts from the LinkedIn master - every platform stays on-topic |
 | **Guardrails** | Strips em dashes, removes section labels, enforces engagement questions, blocks generic CTAs |
 | **Blotato Publisher** | Submits each post with the correct template, account ID, and schedule time |
 | **Weekly Approval** | Sends a 7-day preview email, parses your APPROVE ALL reply, bulk-schedules everything |
@@ -89,6 +89,20 @@ python cloud_daily_run.py --client your_second_client_slug --run
 - A Google Drive folder for your content pipeline
 - A Google OAuth token (one-time browser auth, see setup guide)
 - A Gemini API key (for AI content generation)
+- **An AI content creation tool** (see below)
+
+---
+
+## Content Creation: What You Need to Provide
+
+The Social Engine does **not** generate your content. It takes content you have already written and automates everything after that - approval, image generation, scheduling, and publishing.
+
+Each week, before Sunday 6 PM UTC, you need to populate your Google Drive content folder with Markdown post files in the required format. You can do this with any AI content creation tool - ChatGPT, Claude, a custom agent, or your own workflow.
+
+See [`docs/CONTENT_CREATION.md`](docs/CONTENT_CREATION.md) for:
+- The exact file format required
+- A step-by-step example using an AI tool to generate a week of posts
+- How to use `golden_moments_handoff.py` if your tool outputs to a local directory
 
 ---
 
@@ -106,9 +120,9 @@ pip install -r requirements.txt
 cp clients/example_client.json clients/your_client_slug.json
 # Edit clients/your_client_slug.json with your Blotato IDs and Drive folder IDs
 
-# 4. Set up your .env file
-cp .env.example .env
-# Edit .env with your API keys
+# 4. Set up your.env file
+cp.env.example.env
+# Edit.env with your API keys
 
 # 5. One-time Google Drive auth (opens browser)
 python setup_oauth.py --client your_client_slug
@@ -125,36 +139,38 @@ python content_pipeline/pipeline_runner.py --client your_client_slug --dry-run
 
 ```
 social-engine/
-  clients/                  # Per-client config files (one JSON per client)
-    example_client.json     # Template to copy and fill in
-  content/                  # Content formatting modules
-    hook_selector.py        # Viral hook library (client-aware)
-    linkedin_builder.py     # LinkedIn post assembler
-    repurposer.py           # Platform post derivation engine
-  content_pipeline/         # Weekly content generation
-    weekly_pipeline.py      # Generates 7 LinkedIn master posts
-    post_builder.py         # Derives all platform posts from LinkedIn master
-    pipeline_runner.py      # Full orchestrator with Drive upload and email
-  engine/                   # Core engine modules
-    client_config.py        # Client config loader
-    drive.py                # Google Drive integration
-    publisher.py            # Blotato visual generation
-    workflow.py             # End-to-end publish workflow
-  knowledge_base/           # Content parsing and Drive access
-    content_parser.py       # Markdown frontmatter parser
-    google_drive.py         # Drive file operations
-  publisher/                # Blotato API client
-    blotato.py              # All Blotato API calls
-  docs/                     # Setup guides and content templates
-  cloud_daily_run.py        # Main scheduled task runner
-  weekly_approval.py        # Weekly email approval system
-  auto_publish.py           # Direct publish without approval
-  main.py                   # Interactive CLI for manual use
+ clients/ # Per-client config files (one JSON per client)
+ example_client.json # Template to copy and fill in
+ content/ # Content formatting modules
+ hook_selector.py # Viral hook library (client-aware)
+ linkedin_builder.py # LinkedIn post assembler
+ repurposer.py # Platform post derivation engine
+ content_pipeline/ # Weekly content generation
+ weekly_pipeline.py # Generates 7 LinkedIn master posts
+ post_builder.py # Derives all platform posts from LinkedIn master
+ pipeline_runner.py # Full orchestrator with Drive upload and email
+ engine/ # Core engine modules
+ client_config.py # Client config loader
+ drive.py # Google Drive integration
+ publisher.py # Blotato visual generation
+ workflow.py # End-to-end publish workflow
+ knowledge_base/ # Content parsing and Drive access
+ content_parser.py # Markdown frontmatter parser
+ google_drive.py # Drive file operations
+ publisher/ # Blotato API client
+ blotato.py # All Blotato API calls
+ docs/ # Setup guides and content templates
+ cloud_daily_run.py # Main scheduled task runner
+ weekly_approval.py # Weekly email approval system
+ auto_publish.py # Direct publish without approval
+ main.py # Interactive CLI for manual use
 ```
 
 ---
 
 ## Content Format
+
+> **Note:** You are responsible for creating these files each week using your preferred AI content tool and uploading them to your Google Drive content folder before Sunday 6 PM UTC. See [`docs/CONTENT_CREATION.md`](docs/CONTENT_CREATION.md) for a full walkthrough.
 
 All content files use a simple Markdown format with YAML frontmatter. See `docs/CONTENT_TEMPLATE.md` for the full spec.
 
@@ -188,7 +204,7 @@ The engine enforces these rules on every post before it publishes:
 - No section labels in published output (`## Hook`, `## Body` etc. are stripped)
 - Every post must end with an engagement question
 - No generic CTAs ("follow for more", "click the link", "link in bio")
-- No unprovable claims ("game-changing", "unprecedented")
+- No unprovable claims ("important", "unprecedented")
 
 ---
 
