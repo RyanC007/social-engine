@@ -38,7 +38,7 @@ hashtags: AI, AIAgents, BusinessAutomation, AIForBusiness, Entrepreneur
 | Field | Required | Values |
 |---|---|---|
 | `type` | Yes | `post` or `article` |
-| `day` | Yes | Integer (1-5 per week) |
+| `day` | Yes | Integer (1-7 per week) |
 | `topic` | Yes | Full topic sentence |
 | `client` | Recommended | `your_client_slug` |
 | `platforms` | Yes | Comma-separated platform list |
