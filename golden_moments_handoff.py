@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
+# Social Engine - designed and built by Ryan Cunningham | https://www.readyplangrow.com
 """
-Golden Moments -> Social Engine Handoff Script
-===============================================
-Bridges the Golden Moments content generation pipeline to the Social Engine
-pickup path. This script is the single point of handoff between the two systems.
+Content Handoff Script - Social Engine
+=======================================
+Bridges your AI content generation pipeline to the Social Engine pickup path.
+This script is the single point of handoff between your content creation tool
+and the Social Engine.
+
+Designed and built by Ryan Cunningham | https://www.readyplangrow.com
+Ready, Plan, Grow! - AI-powered tools for founders and operators.
 
 WHAT IT DOES:
  1. Reads Golden Moments LinkedIn posts from:
@@ -308,16 +313,16 @@ def run_handoff(client_slug: str = "your_client", week_label: str = None, dry_ru
  week_label = _iso_week_label()
 
  print(f"\n{'='*60}")
- print(f" GOLDEN MOMENTS -> SOCIAL ENGINE HANDOFF")
+ print(f" CONTENT HANDOFF -> SOCIAL ENGINE")
  print(f" Client: {client_slug} | Week: {week_label}")
  print(f" Dry run: {dry_run}")
  print(f"{'='*60}\n")
 
- # Step 1: Locate Golden Moments LinkedIn posts
- print("STEP 1: Locating Golden Moments content...")
+ # Step 1: Locate content from your AI content creation tool
+ print("STEP 1: Locating content from your content tool...")
  linkedin_dir = _find_linkedin_dir(client_slug, week_label)
  if not linkedin_dir:
- print(f" [ERROR] No Golden Moments LinkedIn directory found for {client_slug} / {week_label}")
+ print(f" [ERROR] No content directory found for {client_slug} / {week_label}")
  print(f" Expected: {CONTENT_ROOT}/{client_slug}-personal/linkedin/{week_label.lower()}/")
  sys.exit(1)
 

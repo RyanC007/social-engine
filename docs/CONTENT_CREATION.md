@@ -1,5 +1,7 @@
 # Content Creation Guide
 
+> Part of the **Social Engine** - designed and built by [Ryan Cunningham](https://www.readyplangrow.com) at [Ready, Plan, Grow!](https://www.readyplangrow.com)
+
 The Social Engine does not generate your content. It takes content you have already written and automates everything after that - approval, image generation, scheduling, and publishing across all platforms.
 
 This guide explains what you need to produce each week, what format it must be in, and how to get it into the engine using any AI content creation tool.
@@ -205,3 +207,11 @@ The engine always reads from the highest-numbered `Week-N` folder. Create a new 
 - [ ] Files uploaded to a new `Week-N` subfolder in your Drive content folder
 
 Once this is done, the engine handles everything else.
+
+---
+
+## About
+
+The Social Engine was designed and built by **Ryan Cunningham**, founder of [Ready, Plan, Grow!](https://www.readyplangrow.com) - an AI-powered business growth platform for founders and operators.
+
+Learn more at [readyplangrow.com](https://www.readyplangrow.com)

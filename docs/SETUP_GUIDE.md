@@ -1,6 +1,6 @@
 # Setup Guide
 
-**Social Engine** — designed and architected by YOUR_NAME | [your-brand.com](https://your-brand.com)
+**Social Engine** - designed and architected by [Ryan Cunningham](https://www.readyplangrow.com) | [Ready, Plan, Grow!](https://www.readyplangrow.com)
 
 ---
 
@@ -18,19 +18,19 @@ Before you start, you need:
 ## Step 1: Clone and Install
 
 ```bash
-git clone https://github.com/YOUR_GITHUB_USERNAME/social-engine.git
+git clone https://github.com/RyanC007/social-engine.git
 cd social-engine
 pip install -r requirements.txt
 ```
 
 ---
 
-## Step 2: Create Your .env File
+## Step 2: Create Your.env File
 
 Copy the example and fill in your values:
 
 ```bash
-cp .env.example .env
+cp.env.example.env
 ```
 
 Edit `.env`:
@@ -85,8 +85,8 @@ Edit `clients/your_name.json` and fill in:
 ## Step 5: Set Up Google Drive
 
 Create two folders in your Google Drive:
-1. **Content Pipeline** — where your weekly post files will live
-2. **Knowledge Base** — where your Voice DNA file lives
+1. **Content Pipeline** - where your weekly post files will live
+2. **Knowledge Base** - where your Voice DNA file lives
 
 Note the folder IDs from the URL (the long string after `/folders/` in the Drive URL) and add them to your client config.
 
@@ -138,7 +138,7 @@ python content_pipeline/pipeline_runner.py --client your_name
 
 ## Step 8: Set Up the Automated Schedule
 
-The engine is designed to run from a cloud environment (like Manus) that stays on 24/7. The scheduled task runs every hour and handles:
+The engine is designed to run from a cloud environment that stays on 24/7. The scheduled task runs every hour and handles:
 - Sunday 6 PM: generate 7 days of content and send the approval email
 - All other times: poll Gmail for your APPROVE ALL reply
 
@@ -204,5 +204,7 @@ Double-check your account IDs and template IDs in your client config. Account ID
 
 ## Credits
 
-Designed and architected by **YOUR_NAME**
-Founder, [Your Brand Name](https://your-brand.com)
+Designed and architected by **Ryan Cunningham**
+Founder, [Ready, Plan, Grow!](https://www.readyplangrow.com)
+
+Learn more about AI-powered business tools at [readyplangrow.com](https://www.readyplangrow.com)

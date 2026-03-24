@@ -1,6 +1,9 @@
 """
 Hybrid Weekly Approval System for the Social Engine.
 
+Designed and built by Ryan Cunningham | https://www.readyplangrow.com
+Ready, Plan, Grow! - AI-powered tools for founders and operators.
+
 FLOW:
  1. Sunday 6 PM - pipeline_runner.py generates 7 days of content
  2. Sunday 6:05 PM - weekly_approval.py sends a full 7-day preview email

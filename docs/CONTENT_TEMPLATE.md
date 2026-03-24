@@ -1,15 +1,17 @@
 # Social Engine Content File Template
 
+> Part of the **Social Engine** - designed and built by [Ryan Cunningham](https://www.readyplangrow.com) at [Ready, Plan, Grow!](https://www.readyplangrow.com)
+
 This is the **canonical format** for all content files dropped into Google Drive.
-Both Ryan's and Client B's content generation skills MUST output files in this exact format.
+Your content creation tool MUST output files in this exact format.
 
 ---
 
 ## File Naming Convention
 
 ```
-post_day{N}_{slug}.md       # short-form social post (1-5 paragraphs)
-article_day{N}_{slug}.md    # long-form LinkedIn article with YouTube Short script
+post_day{N}_{slug}.md # short-form social post (1-5 paragraphs)
+article_day{N}_{slug}.md # long-form LinkedIn article with YouTube Short script
 ```
 
 Examples:
@@ -152,22 +154,22 @@ What would your launch have looked like if you had a clear GTM strategy from day
 
 ```
 RPG Shared Drive (0AK8dAs_XgfnNUk9PVA)
-  └── Ryan Content Pipeline/
-      ├── Week-1/
-      │   ├── post_day1_ai-knowledge-base.md
-      │   ├── post_day2_automation-systems.md
-      │   ├── article_day3_founders-flywheel.md
-      │   ├── post_day4_ai-agents.md
-      │   └── post_day5_seo-ai.md
-      └── Week-2/
-          └── ...
+ └── Ryan Content Pipeline/
+ ├── Week-1/
+ │ ├── post_day1_ai-knowledge-base.md
+ │ ├── post_day2_automation-systems.md
+ │ ├── article_day3_founders-flywheel.md
+ │ ├── post_day4_ai-agents.md
+ │ └── post_day5_seo-ai.md
+ └── Week-2/
+ └──...
 
-  └── Client B Content Pipeline/
-      ├── Week-1/
-      │   ├── post_day1_financial-projections.md
-      │   └── ...
-      └── Week-2/
-          └── ...
+ └── Client B Content Pipeline/
+ ├── Week-1/
+ │ ├── post_day1_financial-projections.md
+ │ └──...
+ └── Week-2/
+ └──...
 ```
 
 The engine reads files from the folder configured in `clients/{slug}.json` under `drive.content_folder_id`.

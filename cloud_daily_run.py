@@ -1,6 +1,9 @@
 """
 Cloud runner for the Social Engine.
 
+Designed and built by Ryan Cunningham | https://www.readyplangrow.com
+Ready, Plan, Grow! - AI-powered tools for founders and operators.
+
 WEEKLY FLOW (automated):
  1. [Sunday 6 PM UTC] pipeline_runner.py generates 7 days of content
  2. [Sunday 6 PM UTC] weekly_approval.py sends 7-day preview email
