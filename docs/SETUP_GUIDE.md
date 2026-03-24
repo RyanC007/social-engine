@@ -18,7 +18,7 @@ Before you start, you need:
 ## Step 1: Clone and Install
 
 ```bash
-git clone https://github.com/RyanC007/social-engine.git
+git clone https://github.com/YOUR_GITHUB_USERNAME/social-engine.git
 cd social-engine
 pip install -r requirements.txt
 ```

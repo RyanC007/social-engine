@@ -17,8 +17,10 @@ from content.repurposer import PlatformPost
 
 
 # Visual template IDs
-YOUTUBE_SHORTS_TEMPLATE = "5903fe43-514d-40ee-a060-0d6628c5f8fd" # bare UUID required
-INSTAGRAM_QUOTE_TEMPLATE = "9f4e66cd-b784-4c02-b2ce-e6d0765fd4c0" # single quote on solid background - one image
+# Template IDs are loaded from your client config (clients/your_slug.json)
+# under blotato.templates.youtube_shorts and blotato.templates.instagram_quote
+YOUTUBE_SHORTS_TEMPLATE = os.getenv("YOUTUBE_SHORTS_TEMPLATE", "YOUR_YOUTUBE_SHORTS_TEMPLATE_ID")
+INSTAGRAM_QUOTE_TEMPLATE = os.getenv("INSTAGRAM_QUOTE_TEMPLATE", "YOUR_INSTAGRAM_QUOTE_TEMPLATE_ID")
 
 
 def _headers() -> dict:
