@@ -1,0 +1,31 @@
+# Secrets -- never commit these
+.env
+service_account.json
+clients/service_account.json
+
+# OAuth tokens -- personal credentials, never commit
+tokens/
+*.token.json
+
+# Runtime state
+.state/
+.publish_state*.json
+publish_log*.jsonl
+
+# Brand images downloaded from Drive
+brand_images_*/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

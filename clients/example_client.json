@@ -1,0 +1,120 @@
+{
+  "name": "Your Name",
+  "slug": "your_client_slug",
+  "website": "https://yourwebsite.com",
+  "email": "your_email@yourdomain.com",
+  "timezone": "America/New_York",
+
+  "brand": {
+    "niche": "Describe your content niche in one sentence",
+    "voice": "Describe your voice in 3-5 words (e.g. direct, authority-building, contrarian)",
+    "icp": "Describe your ideal audience in one sentence",
+    "signature_sign_off": "Your Name | yourwebsite.com"
+  },
+
+  "content_pillars": [
+    {
+      "id": "pillar_1",
+      "name": "Your First Pillar",
+      "description": "What this pillar covers",
+      "day": 1,
+      "post_type": "educational"
+    },
+    {
+      "id": "pillar_2",
+      "name": "Your Second Pillar",
+      "description": "What this pillar covers",
+      "day": 2,
+      "post_type": "story"
+    },
+    {
+      "id": "pillar_3",
+      "name": "Your Third Pillar",
+      "description": "What this pillar covers",
+      "day": 3,
+      "post_type": "hot_take"
+    },
+    {
+      "id": "pillar_4",
+      "name": "Your Fourth Pillar",
+      "description": "What this pillar covers",
+      "day": 4,
+      "post_type": "educational"
+    },
+    {
+      "id": "pillar_5",
+      "name": "Your Fifth Pillar",
+      "description": "What this pillar covers",
+      "day": 5,
+      "post_type": "tactical"
+    },
+    {
+      "id": "pillar_6",
+      "name": "Your Sixth Pillar",
+      "description": "What this pillar covers",
+      "day": 6,
+      "post_type": "thought_leadership"
+    },
+    {
+      "id": "pillar_7",
+      "name": "Your Seventh Pillar",
+      "description": "What this pillar covers",
+      "day": 7,
+      "post_type": "engagement"
+    }
+  ],
+
+  "hashtags": {
+    "primary": ["#YourHashtag1", "#YourHashtag2", "#YourHashtag3"],
+    "secondary": ["#YourHashtag4", "#YourHashtag5"]
+  },
+
+  "blotato": {
+    "api_key_env": "BLOTATO_API_KEY",
+    "base_url": "https://backend.blotato.com/v2",
+
+    "accounts": {
+      "linkedin": "YOUR_LINKEDIN_ACCOUNT_ID",
+      "x": "YOUR_X_ACCOUNT_ID",
+      "instagram": "YOUR_INSTAGRAM_ACCOUNT_ID",
+      "facebook": "YOUR_FACEBOOK_ACCOUNT_ID",
+      "tiktok": "YOUR_TIKTOK_ACCOUNT_ID",
+      "youtube": "YOUR_YOUTUBE_ACCOUNT_ID"
+    },
+
+    "linkedin_pages": {
+      "personal": "YOUR_LINKEDIN_ACCOUNT_ID",
+      "company": "YOUR_COMPANY_PAGE_ID"
+    },
+
+    "templates": {
+      "linkedin_rotation": [
+        "TEMPLATE_UUID_1",
+        "TEMPLATE_UUID_2",
+        "TEMPLATE_UUID_3",
+        "TEMPLATE_UUID_4",
+        "TEMPLATE_UUID_5",
+        "TEMPLATE_UUID_6"
+      ],
+      "facebook_rotation": [
+        "TEMPLATE_UUID_1",
+        "TEMPLATE_UUID_2",
+        "TEMPLATE_UUID_3"
+      ],
+      "instagram_quote": "/base/v2/quote-card/YOUR_TEMPLATE_PATH/v1",
+      "youtube_shorts": "/base/v2/ai-story-video/YOUR_TEMPLATE_PATH/v1"
+    }
+  },
+
+  "drive": {
+    "content_pipeline_folder_id": "YOUR_CONTENT_PIPELINE_FOLDER_ID",
+    "knowledge_base_folder_id": "YOUR_KNOWLEDGE_BASE_FOLDER_ID",
+    "token_file": "tokens/your_client_slug_token.json"
+  },
+
+  "posting_schedule": {
+    "post_time": "09:00",
+    "timezone": "America/New_York",
+    "days": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"]
+  }
+}
