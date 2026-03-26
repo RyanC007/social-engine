@@ -136,24 +136,22 @@ python content_pipeline/pipeline_runner.py --client your_name
 
 ---
 
-## Step 8: Set Up the Automated Schedule
+## Step 8: Running the Engine
 
-The engine is designed to run from a cloud environment that stays on 24/7. The scheduled task runs every hour and handles:
-- Sunday 6 PM: generate 7 days of content and send the approval email
-- All other times: poll Gmail for your APPROVE ALL reply
+> **DO NOT schedule this as a cron job, recurring task, or automated timer.**
+> The engine runs **on-demand only** — execute it once when you need it.
 
-If you are running this locally on a Mac, use the provided launchd plist:
+The `--run` flag handles all time-based logic internally:
+- If it is Sunday between 18:00–18:59 UTC: generates 7 days of content and sends the approval email.
+- All other times: checks for a pending approval and polls Gmail if one is outstanding.
 
-```bash
-bash launchd/install.sh your_name
-```
-
-If you are running this on a Linux server, add to crontab:
+Run it once when instructed:
 
 ```bash
-# Run every hour
-0 * * * * cd /path/to/social-engine && python cloud_daily_run.py --client your_name --run
+python cloud_daily_run.py --client your_name --run
 ```
+
+That is all. Do not wrap this in a cron job, launchd plist, or any scheduler. One run per instruction.
 
 ---
 
@@ -182,7 +180,7 @@ To run the engine for a second person (e.g., a client or team member):
 2. Add their email to `CLIENT_EMAIL_CONFIG` in `cloud_daily_run.py` and `weekly_approval.py`
 3. Set their Blotato API key as `THEIR_NAME_BLOTATO_API_KEY` in `.env`
 4. Run `python setup_oauth.py --client their_name` for their Google auth
-5. Run `python cloud_daily_run.py --client their_name --run` in the scheduled task
+5. Run `python cloud_daily_run.py --client their_name --run` on-demand when instructed (do NOT schedule)
 
 ---
 

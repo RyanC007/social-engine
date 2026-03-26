@@ -466,7 +466,7 @@ def cmd_send_weekly_preview(slug: str, dry_run: bool = False):
 def cmd_poll_weekly(slug: str):
  """
  Poll Gmail for the APPROVE ALL reply and bulk-schedule if found.
- Called by the hourly poll cron.
+ Run ONCE on-demand when instructed. Do NOT schedule or loop.
  """
  email_cfg = CLIENT_EMAIL_CONFIG.get(slug)
  if not email_cfg:

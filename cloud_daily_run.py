@@ -4,14 +4,19 @@ Cloud runner for the Social Engine.
 Designed and built by Ryan Cunningham | https://www.readyplangrow.com
 Ready, Plan, Grow! - AI-powered tools for founders and operators.
 
-WEEKLY FLOW (automated):
- 1. [Sunday 6 PM UTC] pipeline_runner.py generates 7 days of content
+*** ON-DEMAND ONLY - DO NOT SCHEDULE ***
+Do NOT register this script as a cron job, Manus scheduled task, or any
+recurring timer. Run it ONCE when instructed. The --run flag contains all
+time-based logic internally.
+
+WEEKLY FLOW (on-demand):
+ 1. [Sunday 6 PM UTC] Run once: pipeline_runner.py generates 7 days of content
  2. [Sunday 6 PM UTC] weekly_approval.py sends 7-day preview email
- 3. [Hourly, only while pending] weekly_approval.py polls Gmail for APPROVE ALL reply
+ 3. [On instruction] Run once to poll Gmail for APPROVE ALL reply
  4. [On reply] Bulk-schedules all approved days into Blotato at 9 AM EST
  5. [On reply] Sends confirmation email listing all scheduled post times
 
-MANUAL OVERRIDES:
+ON-DEMAND OVERRIDES:
  --force-post Post a specific day immediately (emergency use only)
  --status Show current pipeline state
 

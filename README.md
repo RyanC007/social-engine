@@ -130,7 +130,9 @@ python setup_oauth.py --client your_client_slug
 # 6. Run the weekly pipeline manually to test
 python content_pipeline/pipeline_runner.py --client your_client_slug --dry-run
 
-# 7. Deploy the hourly scheduled task (see docs/SETUP_GUIDE.md)
+# 7. Run on-demand when instructed (see docs/SETUP_GUIDE.md for usage)
+# DO NOT schedule this as a cron job or recurring task
+python cloud_daily_run.py --client your_client_slug --run
 ```
 
 ---
@@ -160,7 +162,7 @@ social-engine/
  publisher/ # Blotato API client
  blotato.py # All Blotato API calls
  docs/ # Setup guides and content templates
- cloud_daily_run.py # Main scheduled task runner
+ cloud_daily_run.py # Main on-demand runner (run once per instruction — do NOT schedule)
  weekly_approval.py # Weekly email approval system
  auto_publish.py # Direct publish without approval
  main.py # Interactive CLI for manual use
